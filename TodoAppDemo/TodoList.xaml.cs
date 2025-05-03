@@ -13,11 +13,22 @@ public partial class TodoList : UserControl
         DataContext = new ViewModels.TaskListViewModel();
     }
     
-    public static RoutedCommand AddEmptyTaskCommand = new RoutedCommand();
+    public readonly static RoutedCommand AddEmptyTaskCommand = new RoutedCommand();
+    public readonly static RoutedCommand DeleteTaskCommand = new RoutedCommand();
 
     public void AddEmptyTaskExecuted(object sender, ExecutedRoutedEventArgs e)
     {
         TypedDataContext.AddTask(string.Empty);
+    }
+
+    public void DeleteTaskExecuted(object sender, ExecutedRoutedEventArgs e)
+    {
+        if (e.Parameter is not TaskViewModel taskViewModel)
+        {
+            throw new ArgumentNullException(nameof(taskViewModel));
+        }
+
+        TypedDataContext.RemoveTask(taskViewModel);
     }
 
     private void TextBoxKeyDown(object sender, KeyEventArgs e)
