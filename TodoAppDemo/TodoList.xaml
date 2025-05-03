@@ -1,0 +1,25 @@
+﻿<UserControl x:Class="TodoAppDemo.TodoList"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TodoAppDemo"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.CommandBindings>
+        <CommandBinding Command="{x:Static local:TodoList.AddEmptyTaskCommand}" Executed="AddEmptyTaskExecuted" />
+    </UserControl.CommandBindings>
+    <StackPanel>
+        <ListView Name="TodoListView" Margin="8" ItemsSource="{Binding Tasks}" SelectedItem="{Binding SelectedItem}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <DockPanel FocusManager.FocusedElement="{Binding ElementName=tb}">
+                        <CheckBox IsChecked="{Binding Completed}" Margin="0,0,4,0" />
+                        <TextBox Name="tb" Text="{Binding Content}" MinWidth="32" Padding="0,0,8,0" KeyDown="TextBoxKeyDown" />
+                    </DockPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Button Command="{x:Static local:TodoList.AddEmptyTaskCommand}" Content="Add Task" />
+    </StackPanel>
+</UserControl>
